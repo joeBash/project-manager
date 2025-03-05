@@ -19,12 +19,6 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-<<<<<<< HEAD
-export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: boolean; status?: string }) {
-    const { auth } = usePage<SharedData>().props;
-
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-=======
 interface ProfileForm {
     name: string;
     email: string;
@@ -34,7 +28,6 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
     const { auth } = usePage<SharedData>().props;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<ProfileForm>>({
->>>>>>> 11bde07 (Re-init laravel app)
         name: auth.user.name,
         email: auth.user.email,
     });

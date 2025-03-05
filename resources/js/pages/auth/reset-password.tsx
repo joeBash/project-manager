@@ -21,11 +21,7 @@ type ResetPasswordForm = {
 };
 
 export default function ResetPassword({ token, email }: ResetPasswordProps) {
-<<<<<<< HEAD
-    const { data, setData, post, processing, errors, reset } = useForm<ResetPasswordForm>({
-=======
     const { data, setData, post, processing, errors, reset } = useForm<Required<ResetPasswordForm>>({
->>>>>>> 11bde07 (Re-init laravel app)
         token: token,
         email: email,
         password: '',

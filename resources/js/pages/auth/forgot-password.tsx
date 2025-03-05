@@ -11,11 +11,7 @@ import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
 
 export default function ForgotPassword({ status }: { status?: string }) {
-<<<<<<< HEAD
-    const { data, setData, post, processing, errors } = useForm({
-=======
     const { data, setData, post, processing, errors } = useForm<Required<{ email: string }>>({
->>>>>>> 11bde07 (Re-init laravel app)
         email: '',
     });
 

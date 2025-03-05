@@ -17,11 +17,7 @@ type RegisterForm = {
 };
 
 export default function Register() {
-<<<<<<< HEAD
-    const { data, setData, post, processing, errors, reset } = useForm<RegisterForm>({
-=======
     const { data, setData, post, processing, errors, reset } = useForm<Required<RegisterForm>>({
->>>>>>> 11bde07 (Re-init laravel app)
         name: '',
         email: '',
         password: '',

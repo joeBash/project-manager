@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
+use App\Models\Project;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Timesheet>
@@ -17,7 +19,11 @@ class TimesheetFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'task_name' => fake()->sentence(4),
+            'date' => fake()->date(),
+            'hours' => fake()->randomFloat(2, 0, 40),
+            'user_id' => User::factory(),
+            'project_id' => Project::factory(),
         ];
     }
 }

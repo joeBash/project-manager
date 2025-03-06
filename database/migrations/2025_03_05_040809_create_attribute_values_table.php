@@ -6,8 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,10 +14,10 @@ return new class extends Migration
     {
         Schema::create('attribute_values', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Attribute::class);
-            $table->foreignIdFor(Project::class);
-            $table->string('value');
-            $table->unique(['attribute_id','project_id']); // TODO: check if this is necessary
+            $table->foreignIdFor(Attribute::class)->cascadeOnDelete();
+            $table->foreignIdFor(Project::class)->cascadeOnDelete();
+            $table->string('value'); // string is the most general type which could support all types of values
+            $table->unique(['attribute_id', 'project_id']);
             $table->timestamps();
         });
     }

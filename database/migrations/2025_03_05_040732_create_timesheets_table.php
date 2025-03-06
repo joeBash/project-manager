@@ -3,9 +3,10 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
+use App\Models\Project;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,7 +16,9 @@ return new class extends Migration
             $table->id();
             $table->string('task_name');
             $table->date('date');
-            $table->unsignedInteger('hours');
+            $table->decimal('hours', 8, 2);
+            $table->foreignIdFor(User::class);      // should not cascade on delete - accounting should be kept for historical purposes
+            $table->foreignIdFor(Project::class);   // should not cascade on delete - accounting should be kept for historical purposes
             $table->timestamps();
         });
     }

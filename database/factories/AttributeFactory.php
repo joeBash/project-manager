@@ -26,16 +26,21 @@ class AttributeFactory extends Factory
         ];
     }
 
+    public static function getExampleAttributeNames(): array
+    {
+        return [
+            ['description', 'comment'],                                 // AttributeType::TEXT
+            ['due_date', 'start_date', 'end_date'],                     // AttributeType::DATE
+            ['estimated_hours', 'actual_hours'],                        // AttributeType::NUMBER
+            ['department', 'priority', 'accounting_key', 'sprint'],     // AttributeType::SELECT
+        ];
+    }
+
     private function generateLogicalAttributes(): array
     {
         $logicalAttributes = [];
 
-        $possibleAttributeNames = [
-            AttributeType::TEXT => ['description', 'comment'],
-            AttributeType::NUMBER => ['estimated_hours', 'actual_hours'],
-            AttributeType::DATE => ['due_date', 'start_date', 'end_date'],
-            AttributeType::SELECT => ['department', 'priority', 'accounting_key', 'sprint'],
-        ];
+        $possibleAttributeNames = array_combine(AttributeType::values(), $this->getExampleAttributeNames());
 
         foreach ($possibleAttributeNames as $type => $names) {
             foreach ($names as $name) {

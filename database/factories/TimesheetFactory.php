@@ -19,7 +19,7 @@ class TimesheetFactory extends Factory
     public function definition(): array
     {
         return [
-            'task_name' => fake()->sentence(4),
+            'task_name' => str_replace('.', '', fake()->sentence(4)),
             'date' => fake()->date(),
             'hours' => fake()->randomFloat(2, 0, 40),
             'user_id' => User::factory(),

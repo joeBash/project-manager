@@ -8,10 +8,14 @@ use App\Models\Timesheet;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Collection;
 
 class DatabaseSeeder extends Seeder
 {
+
+    public const NB_USERS = 10;
+    public const NB_PROJECTS = 5;
+    public const NB_ATTRIBUTES = 10;
+
     /**
      * Seed the application's database.
      */
@@ -24,19 +28,25 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        User::factory(9)->create();
-        Project::factory(5)->create();
+        User::factory(DatabaseSeeder::NB_USERS - 1)->create();
+        Project::factory(DatabaseSeeder::NB_PROJECTS)->create();
 
-
-        $this->assignProjectsAndTimesheetsToUsers(3, 1);
-        $this->seedUniqueAttributes(10); // respects integrety constraint on (name, type)
+        $this->assignProjectsAndTimesheetsToUsers(min(3, DatabaseSeeder::NB_PROJECTS), 1);
+        $this->seedUniqueAttributes(DatabaseSeeder::NB_ATTRIBUTES);
 
         $projects = Project::all();
 
+        // TODO: find a more efficient way to assign attributes to projects
         Attribute::all()->each(function ($attribute) use ($projects) {
-            $attribute->values()->attach(AttributeValue::factory(5)->create([
+            $project = $projects->filter(function ($project) use ($attribute) {
+                return !AttributeValue::where('attribute_id', $attribute->id)
+                    ->where('project_id', $project->id)
+                    ->exists();
+            })->random();
+
+            $attribute->attributeValues()->save(AttributeValue::factory()->create([
                 'attribute_id' => $attribute->id,
-                'project_id' => $projects->random()->id,
+                'project_id' => $project->id,
             ]));
         });
     }
@@ -65,15 +75,18 @@ class DatabaseSeeder extends Seeder
 
     private function seedUniqueAttributes(int $nbAttributes)
     {
-        $attributes = [];
-
-        for ($i = 0; $i < $nbAttributes; $i++) {
+        // TODO: find a more efficient way to ensure uniqueness
+        for ($i = 1; $i < $nbAttributes; $i++) {
             // loop until we have a new unique attribute to add
             do {
-                $generatedAttribute = Attribute::factory()->create();
-            } while (in_array($generatedAttribute, $attributes, true));
+                $generatedAttribute = Attribute::factory()->make();
 
-            $attributes[] = $generatedAttribute;
+                $attributeAlreadyExists = Attribute::where('name', $generatedAttribute->name)
+                    ->where('type', $generatedAttribute->type)
+                    ->exists();
+            } while ($attributeAlreadyExists);
+
+            $generatedAttribute->save();
         }
     }
 }

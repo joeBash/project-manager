@@ -36,5 +36,54 @@ export interface User {
     avatar?: string;
     created_at: string;
     updated_at: string;
-    [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface Project {
+    id: number;
+    name: string;
+    status: ProjectStatus;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Timesheet {
+    id: number;
+    project_id: number;
+    user_id: number;
+    date: string;
+    hours: number;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Attribute {
+    id: number;
+    name: string;
+    type: AttributeType;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface AttributeValue {
+    id: number;
+    attribute_id: number;
+    project_id: number;
+    value: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export enum ProjectStatus {
+    Blocked = 'blocked',
+    Backlog = 'backlog',
+    InProgress = 'in-progress',
+    InReview = 'in-review',
+    Done = 'done',
+}
+
+export enum AttributeType {
+    Text = 'text',
+    Number = 'number',
+    Date = 'date',
+    Select = 'select',
 }

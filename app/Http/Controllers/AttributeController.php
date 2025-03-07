@@ -2,17 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AttributeResource;
 use App\Models\Attribute;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class AttributeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $validatedRequest = $request->validate([
+            'per_page' => 'integer|min:1|max:20',
+        ]);
+
+        $paginatedAttributes = Attribute::latest()->paginate($validatedRequest['per_page'] ?? 5);
+
+        return Inertia::render('Attributes/Index', [
+            'attributes' => AttributeResource::collection($paginatedAttributes),
+        ]);
     }
 
     /**

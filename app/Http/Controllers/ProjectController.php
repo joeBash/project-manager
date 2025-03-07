@@ -4,15 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use App\Http\Resources\ProjectResource;
 
 class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $validatedRequest = $request->validate([
+            'per_page' => 'integer|min:1|max:20',
+        ]);
+
+        $paginatedProjects = Project::latest()
+            ->with('attributeValues')
+            ->paginate($validatedRequest['per_page'] ?? 5);
+
+        return Inertia::render('Projects/Index', [
+            'projects' => ProjectResource::collection($paginatedProjects),
+        ]);
     }
 
     /**

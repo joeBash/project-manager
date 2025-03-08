@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Enums\AttributeType;
 use App\Models\Attribute;
 use App\Models\Project;
 use Database\Seeders\DatabaseSeeder;
@@ -35,8 +36,8 @@ class AttributeValueFactory extends Factory
     private function fakeAppropriateValue(Attribute $attribute): mixed
     {
         return match ($attribute->type) {
-            'DATE' => fake()->date(),
-            'NUMBER' => fake()->randomFloat(2, 0, 1000),
+            AttributeType::DATE => fake()->date(),
+            AttributeType::NUMBER => fake()->randomFloat(2, 0, 1000),
             default => fake()->word(),
         };
     }

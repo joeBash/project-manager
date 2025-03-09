@@ -15,11 +15,25 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $validatedRequest = $request->validate([
-            'per_page' => 'integer|min:1|max:20',
+            'per_page' => 'integer|min:1|max:50',
+            'filters' => 'array',
         ]);
 
-        $paginatedProjects = Project::latest()
-            ->with('attributeValues')
+        $filters = $validatedRequest['filters'] ?? [];
+        $projects = Project::with('attributeValues');
+
+        foreach ($filters as $key => $value) {
+            if (in_array($key, ['name', 'status'])) {
+                $projects->where($key, $value);
+            } else {
+                $projects->whereHas('attributeValues.attribute', function ($query) use ($key, $value) {
+                    $query->where('attributes.name', $key)
+                        ->whereLike('attribute_values.value', '%' . $value . '%');
+                });
+            }
+        }
+
+        $paginatedProjects = $projects->latest()
             ->paginate($validatedRequest['per_page'] ?? 5);
 
         return Inertia::render('Projects/Index', [

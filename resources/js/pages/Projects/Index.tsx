@@ -11,7 +11,9 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 interface Props {
-    projects: Project[];
+    projects: {
+        data: Project[];
+    };
 }
 
 export default function Index({ projects }: Props) {
@@ -20,6 +22,13 @@ export default function Index({ projects }: Props) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Projects" />
+            {console.log(projects)}
+            {projects.data.map((project) => (
+                <div key={project.id}>
+                    <h1>{project.name}</h1>
+                    <p>{project.status}</p>
+                </div>
+            ))}
         </AppLayout>
     );
 }

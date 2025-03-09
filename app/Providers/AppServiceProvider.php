@@ -20,6 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        JsonResource::withoutWrapping();
+        JsonResource::withoutWrapping(); // except paginated resources, which must still be wrapped in a data key
     }
 }

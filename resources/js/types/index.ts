@@ -74,16 +74,16 @@ export interface AttributeValue {
 }
 
 export enum ProjectStatus {
-    Blocked = 'blocked',
-    Backlog = 'backlog',
-    InProgress = 'in-progress',
-    InReview = 'in-review',
-    Done = 'done',
+    Blocked = 'Blocked',
+    Backlog = 'Backlog',
+    InProgress = 'In Progress',
+    InReview = 'In Review',
+    Done = 'Done',
 }
 
 export enum AttributeType {
-    Text = 'text',
-    Number = 'number',
-    Date = 'date',
-    Select = 'select',
+    Text = 'Text',
+    Number = 'Number',
+    Date = 'Date',
+    Select = 'Select',
 }

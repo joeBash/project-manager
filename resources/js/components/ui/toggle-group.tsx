@@ -2,7 +2,7 @@ import * as React from "react"
 import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group"
 import { type VariantProps } from "class-variance-authority"
 
-import { cn } from "@/lib/utils"
+import Utils from "@/lib/utils"
 import { toggleVariants } from "@/components/ui/toggle"
 
 const ToggleGroupContext = React.createContext<
@@ -25,7 +25,7 @@ function ToggleGroup({
       data-slot="toggle-group"
       data-variant={variant}
       data-size={size}
-      className={cn(
+      className={Utils.cn(
         "group/toggle-group flex items-center rounded-md data-[variant=outline]:shadow-xs",
         className
       )}
@@ -53,7 +53,7 @@ function ToggleGroupItem({
       data-slot="toggle-group-item"
       data-variant={context.variant || variant}
       data-size={context.size || size}
-      className={cn(
+      className={Utils.cn(
         toggleVariants({
           variant: context.variant || variant,
           size: context.size || size,

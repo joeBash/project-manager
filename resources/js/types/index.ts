@@ -34,16 +34,13 @@ export interface User {
     last_name: string;
     email: string;
     avatar?: string;
-    created_at: string;
-    updated_at: string;
 }
 
 export interface Project {
     id: number;
     name: string;
     status: ProjectStatus;
-    created_at: string;
-    updated_at: string;
+    attributeValues?: AttributeValue[];
 }
 
 export interface Timesheet {
@@ -52,25 +49,42 @@ export interface Timesheet {
     user_id: number;
     date: string;
     hours: number;
-    created_at: string;
-    updated_at: string;
 }
 
 export interface Attribute {
     id: number;
     name: string;
     type: AttributeType;
-    created_at: string;
-    updated_at: string;
 }
 
 export interface AttributeValue {
     id: number;
-    attribute_id: number;
-    project_id: number;
+    attribute_id?: number;
+    attribute?: string;
+    project_id?: number;
     value: string;
-    created_at: string;
-    updated_at: string;
+}
+
+export interface PaginationLinks {
+    first: string;
+    last: string;
+    prev?: string;
+    next?: string;
+}
+
+export interface PaginationMeta {
+    current_page: number;
+    from: number;
+    last_page: number;
+    links: {
+        url?: string;
+        label: string;
+        active: boolean;
+    }[];
+    path: string;
+    per_page: number;
+    to: number;
+    total: number;
 }
 
 export enum ProjectStatus {

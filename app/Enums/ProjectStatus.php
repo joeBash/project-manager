@@ -6,8 +6,8 @@ enum ProjectStatus: string
 {
     case BLOCKED = "blocked";
     case BACKLOG = "backlog";
-    case IN_PROGRESS = "in_progress";
-    case IN_REVIEW = "in_review";
+    case IN_PROGRESS = "in progress";
+    case IN_REVIEW = "in review";
     case DONE = "done";
 
     public static function values(): array

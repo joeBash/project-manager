@@ -1,6 +1,8 @@
-import { Project, type BreadcrumbItem, type SharedData } from '@/types';
+import { PaginationLinks, PaginationMeta, Project, type BreadcrumbItem, type SharedData } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 
+import ProjectsTable from '@/components/Projects/ProjectsTable';
+import PaginationPages from '@/components/ui/pagination-pages';
 import AppLayout from '@/layouts/app-layout';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -13,22 +15,21 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface Props {
     projects: {
         data: Project[];
+        links: PaginationLinks;
+        meta: PaginationMeta;
     };
+    attributeValues: [];
 }
 
-export default function Index({ projects }: Props) {
+export default function Index({ projects, attributeValues }: Props) {
     const { auth } = usePage<SharedData>().props;
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Projects" />
-            {console.log(projects)}
-            {projects.data.map((project) => (
-                <div key={project.id}>
-                    <h1>{project.name}</h1>
-                    <p>{project.status}</p>
-                </div>
-            ))}
+            {/* TODO: Add filters here */}
+            <ProjectsTable projects={projects} attributeValues={attributeValues} />
+            <PaginationPages items={projects} />
         </AppLayout>
     );
 }

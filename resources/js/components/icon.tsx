@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import Utils from '@/lib/utils';
 import { type LucideProps } from 'lucide-react';
 import { type ComponentType } from 'react';
 
@@ -7,5 +7,5 @@ interface IconProps extends Omit<LucideProps, 'ref'> {
 }
 
 export function Icon({ iconNode: IconComponent, className, ...props }: IconProps) {
-    return <IconComponent className={cn('h-4 w-4', className)} {...props} />;
+    return <IconComponent className={Utils.cn('h-4 w-4', className)} {...props} />;
 }

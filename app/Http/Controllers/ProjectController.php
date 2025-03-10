@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AttributeValueResource;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -36,8 +37,11 @@ class ProjectController extends Controller
         $paginatedProjects = $projects->latest()
             ->paginate($validatedRequest['per_page'] ?? 5);
 
+        $paginatedAttributeValues = $paginatedProjects->pluck('attributeValues')->flatten()->unique('id');
+
         return Inertia::render('Projects/Index', [
             'projects' => ProjectResource::collection($paginatedProjects),
+            'attributeValues' => AttributeValueResource::collection($paginatedAttributeValues),
         ]);
     }
 

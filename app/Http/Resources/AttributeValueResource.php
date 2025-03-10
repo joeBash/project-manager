@@ -17,8 +17,8 @@ class AttributeValueResource extends JsonResource
         return [
             "id" => $this->id,
             "value" => $this->value,
-            "attribute" => new AttributeResource($this->whenLoaded("attribute")),
-            "project" => new ProjectResource($this->whenLoaded("project")),
+            "attribute" => $this->attribute?->name,
+            "project" => $this->project?->name,
         ];
     }
 }
